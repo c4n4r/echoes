@@ -248,5 +248,8 @@ shape = SubResource("RectangleShape2D_8fshm")
 [node name="EchoSpot" type="Node2D" parent="."]
 position = Vector2(0, -24)
 
+[node name="EchoCooldown" type="Timer" parent="."]
+
 [connection signal="on_focus_start" from="." to="Camera2D" method="_on_player_on_focus_start"]
 [connection signal="on_focus_stop" from="." to="Camera2D" method="_on_player_on_focus_stop"]
+[connection signal="timeout" from="EchoCooldown" to="." method="_on_echo_cooldown_timeout"]

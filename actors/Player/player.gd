@@ -9,6 +9,7 @@ const FOCUS_GROWTH_RATE = 200.0
 @onready var player_camera: Camera2D = $Camera2D
 @onready var front_mask: ColorRect = get_tree().current_scene.get_node("FrontMask")
 @onready var echo_spot: Node2D = $EchoSpot
+@onready var echo_cooldown_timer: Timer = $EchoCooldown
 @export var is_echo_activated := false
 
 
@@ -19,6 +20,7 @@ signal on_focus_stop
 var is_focusing := false
 var focus_radius := 0.0
 var echo_instance: Echo = null
+var can_focus: bool = true
 
 func _ready() -> void:
 	echo_instance = Echo.new(
@@ -82,6 +84,8 @@ func handle_focus(delta: float) -> void:
 			stop_focus()
 
 func start_focus() -> void:
+	if not can_focus:
+		return
 	on_focus_start.emit()
 
 	is_focusing = true
@@ -90,7 +94,7 @@ func start_focus() -> void:
 	
 	echo_instance = Echo.new(
 		front_mask,
-		self,
+		echo_spot,
 		15.0
 	)
 	add_child(echo_instance)
@@ -99,10 +103,17 @@ func start_focus() -> void:
 	focus_radius = FOCUS_GROWTH_RATE * get_physics_process_delta_time()
 
 func stop_focus() -> void:
+	can_focus = false
 	is_focusing = false
+	echo_cooldown_timer.wait_time = focus_radius / (FOCUS_GROWTH_RATE)
+	echo_cooldown_timer.start()
 	is_echo_activated = false
 	if echo_instance:
 		# Shrink echo at FOCUS_GROWTH_RATE / 2
 		var shrink_time = (focus_radius) / (FOCUS_GROWTH_RATE * 6)
 		echo_instance.make_radius_grow(focus_radius, 0.0, shrink_time)
 	on_focus_stop.emit()
+
+
+func _on_echo_cooldown_timeout() -> void:
+	can_focus = true
