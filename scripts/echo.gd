@@ -5,7 +5,8 @@ extends Node2D
 @export var actor: Node2D
 @export var reveal_radius: float = 15.0
 @export var _roam_time: float = 0.0
-
+@export var roam_radius: float = reveal_radius * 0.2
+@export var roam_speed: float = 0.7
 var shader_material: ShaderMaterial
 var target: Node2D = null
 func _init(
@@ -53,8 +54,8 @@ func node_has_echo_slot(node: Node) -> bool:
 	return node.get_children().has("EchoSpot")
 
 func _make_echo_roam(_delta: float) -> void:
-	var roam_radius = reveal_radius * 0.2
-	var roam_speed = 0.7
+	roam_radius = reveal_radius * 0.2
+	roam_speed = 0.7
 	self._roam_time += _delta
 	var offset = Vector2(
 		roam_radius * sin(self._roam_time * roam_speed),
@@ -63,6 +64,15 @@ func _make_echo_roam(_delta: float) -> void:
 	if shader_material:
 		shader_material.set_shader_parameter("mouse_pos", actor.get_global_transform_with_canvas().origin + offset)
 
+
+func randomize_echo_radius(rand: int) -> void:
+	var target_radius = randi() % rand + 10
+	# Don't change radius too frequently - only when significantly different
+	if abs(reveal_radius - target_radius) > 5:
+		# Use the existing make_radius_evolve function for smooth transition
+		# Random duration between 0.5 and 1.5 seconds for natural feel
+		var transition_time = randf_range(0.5, 1.5)
+		make_radius_evolve(target_radius, transition_time)
 
 func set_reveal_radius(radius: float) -> void:
 	reveal_radius = radius
