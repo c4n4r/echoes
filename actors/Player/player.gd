@@ -8,7 +8,13 @@ const FOCUS_GROWTH_RATE = 200.0
 @onready var animated_sprite: AnimatedSprite2D = $Anims
 @onready var player_camera: Camera2D = $Camera2D
 @onready var front_mask: ColorRect = get_tree().current_scene.get_node("FrontMask")
+@onready var echo_spot: Node2D = $EchoSpot
 @export var is_echo_activated := false
+
+
+signal on_focus_start
+signal on_focus_stop
+
 
 var is_focusing := false
 var focus_radius := 0.0
@@ -17,7 +23,7 @@ var echo_instance: Echo = null
 func _ready() -> void:
 	echo_instance = Echo.new(
 		front_mask,
-		self,
+		echo_spot,
 		25.0
 	)
 	add_child(echo_instance)
@@ -76,6 +82,8 @@ func handle_focus(delta: float) -> void:
 			stop_focus()
 
 func start_focus() -> void:
+	on_focus_start.emit()
+
 	is_focusing = true
 	is_echo_activated = true
 	focus_radius = 0.0
@@ -94,4 +102,7 @@ func stop_focus() -> void:
 	is_focusing = false
 	is_echo_activated = false
 	if echo_instance:
-		echo_instance.make_radius_grow(FOCUS_GROWTH_RATE * get_physics_process_delta_time(), 0.0, get_physics_process_delta_time() / 2)
+		# Shrink echo at FOCUS_GROWTH_RATE / 2
+		var shrink_time = (focus_radius) / (FOCUS_GROWTH_RATE * 6)
+		echo_instance.make_radius_grow(focus_radius, 0.0, shrink_time)
+	on_focus_stop.emit()

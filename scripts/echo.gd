@@ -4,6 +4,7 @@ extends Node2D
 @export var front_mask: ColorRect
 @export var actor: Node2D
 @export var reveal_radius: float = 15.0
+@export var _roam_time: float = 0.0
 
 var shader_material: ShaderMaterial
 
@@ -23,11 +24,26 @@ func _ready():
 		if shader_material:
 			shader_material.set_shader_parameter("radius", reveal_radius)
 			shader_material.set_shader_parameter("active", true)
+	# Initialize time for roaming
+	self._roam_time = 0.0
 
 func _process(_delta):
 	if shader_material:
-		shader_material.set_shader_parameter("mouse_pos", actor.get_global_transform_with_canvas().origin)
+		_make_echo_roam(_delta)
 		shader_material.set_shader_parameter("radius", reveal_radius)
+
+
+func _make_echo_roam(_delta: float) -> void:
+	# make the echo slowly roam around the actor
+	var roam_radius = reveal_radius * 0.1
+	var roam_speed = 0.5 # slower speed for gentle roaming
+	self._roam_time += _delta
+	var offset = Vector2(
+		roam_radius * sin(self._roam_time * roam_speed),
+		roam_radius * cos(self._roam_time * roam_speed)
+	)
+	if shader_material:
+		shader_material.set_shader_parameter("mouse_pos", actor.get_global_transform_with_canvas().origin + offset)
 
 
 func set_reveal_radius(radius: float) -> void:

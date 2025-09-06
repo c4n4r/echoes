@@ -1,7 +1,8 @@
-[gd_scene load_steps=44 format=3 uid="uid://tmqk4k3q1usc"]
+[gd_scene load_steps=45 format=3 uid="uid://tmqk4k3q1usc"]
 
 [ext_resource type="Script" uid="uid://cp1jonif0fst8" path="res://actors/Player/player.gd" id="1_ixlqj"]
 [ext_resource type="Texture2D" uid="uid://ci6hvrnhpp4pc" path="res://assets/Jump/Jump_0001.png" id="2_bflq2"]
+[ext_resource type="Script" uid="uid://cnwp3ctmrhvgy" path="res://actors/camera/camera.gd" id="2_vlvg8"]
 [ext_resource type="Texture2D" uid="uid://bjc2t5ui5mpwf" path="res://assets/Jump/Jump_0002.png" id="3_vlvg8"]
 [ext_resource type="Texture2D" uid="uid://dky83gvkv40gm" path="res://assets/Jump/Jump_0003.png" id="4_ue7d7"]
 [ext_resource type="Texture2D" uid="uid://cdtweulx21yyd" path="res://assets/Jump/Jump_0004.png" id="5_jkk2w"]
@@ -235,6 +236,7 @@ script = ExtResource("1_ixlqj")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(160, -80)
+script = ExtResource("2_vlvg8")
 
 [node name="Anims" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_au0nh")
@@ -242,3 +244,9 @@ animation = &"Falling"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8fshm")
+
+[node name="EchoSpot" type="Node2D" parent="."]
+position = Vector2(0, -24)
+
+[connection signal="on_focus_start" from="." to="Camera2D" method="_on_player_on_focus_start"]
+[connection signal="on_focus_stop" from="." to="Camera2D" method="_on_player_on_focus_stop"]
