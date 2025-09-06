@@ -36,22 +36,30 @@ float mask_ellipse(vec2 pos, vec2 half_size, float s) {
     return smoothstep(1.0, 1.0 + s / max(half_size.x, half_size.y), dist);
 }
 
-
-
-
-
-
-
+// Improved random function for more variation
 float rand(vec2 co) {
     return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
-// Calcul des vagues aquatiques (modélisation de la distorsion fluide)
+// Blurry, random wave effect
 vec2 wave_effect(vec2 pos) {
-    float noise_val = rand(floor(pos * noise_scale)); // Variation aléatoire
-    // Crée une onde sinusoïdale animée, et ajoute de la distorsion avec le bruit
-    float wave = sin(pos.x * wave_frequency + TIME * 2.0 + noise_val) * wave_strength; // Vagues animées
-    return vec2(pos.x + wave, pos.y); // Appliquer la déformation horizontale
+    float t = TIME * 2.0;
+    float n1 = rand(floor(pos * noise_scale + t));
+    float n2 = rand(floor(pos.yx * noise_scale - t));
+    float n3 = rand(floor(pos * noise_scale * 1.5 + t * 0.5));
+    float wave_x = sin(pos.x * wave_frequency + t + n1 * 6.28) * wave_strength * (0.5 + n2);
+    float wave_y = cos(pos.y * wave_frequency + t + n3 * 6.28) * wave_strength * (0.5 + n1);
+    // Blur by mixing several offsets
+    vec2 offset1 = vec2(wave_x, wave_y) * 0.5;
+    vec2 offset2 = vec2(
+        sin(pos.y * wave_frequency + t + n2 * 3.14) * wave_strength * 0.3,
+        cos(pos.x * wave_frequency + t + n3 * 3.14) * wave_strength * 0.3
+    );
+    vec2 offset3 = vec2(
+        sin(pos.x * wave_frequency * 0.7 + t + n3 * 2.0) * wave_strength * 0.2,
+        cos(pos.y * wave_frequency * 0.7 + t + n1 * 2.0) * wave_strength * 0.2
+    );
+    return pos + offset1 + offset2 + offset3;
 }
 
 void fragment() {
