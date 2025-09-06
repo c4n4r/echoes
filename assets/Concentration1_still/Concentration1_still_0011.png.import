@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dowy1aaiaa0p0"
-path="res://.godot/imported/piques005.png-26a44764a57ed1a80d5726df3258547f.ctex"
+uid="uid://brvwhww4g7fwv"
+path="res://.godot/imported/Concentration1_still_0011.png-8052dec826aa1d2eeeb6f74001446813.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tiles/AnimatedTiles/piques/piques005.png"
-dest_files=["res://.godot/imported/piques005.png-26a44764a57ed1a80d5726df3258547f.ctex"]
+source_file="res://assets/Concentration1_still/Concentration1_still_0011.png"
+dest_files=["res://.godot/imported/Concentration1_still_0011.png-8052dec826aa1d2eeeb6f74001446813.ctex"]
 
 [params]
 
