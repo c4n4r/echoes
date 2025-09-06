@@ -385,7 +385,7 @@ script = ExtResource("1_ixlqj")
 stream = ExtResource("2_ue7d7")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(160, -80)
+position = Vector2(160, -32)
 script = ExtResource("2_vlvg8")
 
 [node name="Anims" type="AnimatedSprite2D" parent="."]

@@ -1,12 +1,14 @@
-extends Sprite2D
+extends Node2D
 
+
+@export var echo_radius: float = 50.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var echo = Echo.new(
 		get_tree().current_scene.get_node("FrontMask") as ColorRect,
 		self as Node2D,
-		50.0
+		echo_radius
 	)
 	print("Adding echo to monolith", echo)
 	add_child(echo)
