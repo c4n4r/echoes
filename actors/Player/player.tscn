@@ -1,38 +1,40 @@
 [gd_scene load_steps=13 format=3 uid="uid://h8anckwpuxt6"]
 
 [ext_resource type="Script" uid="uid://cp1jonif0fst8" path="res://actors/Player/player.gd" id="1_5l0d5"]
-[ext_resource type="Texture2D" uid="uid://p2qfjekbcaq7" path="res://assets/1_bit_dungeon_tilest.png" id="1_vhr1b"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j6lu3"]
+load_path = "res://.godot/imported/1_bit_dungeon_tilest.png-1028e8f21f91b68036abccc551fbf519.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ni5v"]
-atlas = ExtResource("1_vhr1b")
+atlas = SubResource("CompressedTexture2D_j6lu3")
 region = Rect2(32, 96, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v1key"]
-atlas = ExtResource("1_vhr1b")
+atlas = SubResource("CompressedTexture2D_j6lu3")
 region = Rect2(8, 96, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b63gh"]
-atlas = ExtResource("1_vhr1b")
+atlas = SubResource("CompressedTexture2D_j6lu3")
 region = Rect2(16, 96, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n7l8t"]
-atlas = ExtResource("1_vhr1b")
+atlas = SubResource("CompressedTexture2D_j6lu3")
 region = Rect2(24, 96, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_isd1h"]
-atlas = ExtResource("1_vhr1b")
+atlas = SubResource("CompressedTexture2D_j6lu3")
 region = Rect2(8, 104, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8gtf5"]
-atlas = ExtResource("1_vhr1b")
+atlas = SubResource("CompressedTexture2D_j6lu3")
 region = Rect2(16, 104, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_awv0x"]
-atlas = ExtResource("1_vhr1b")
+atlas = SubResource("CompressedTexture2D_j6lu3")
 region = Rect2(24, 104, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pnakb"]
-atlas = ExtResource("1_vhr1b")
+atlas = SubResource("CompressedTexture2D_j6lu3")
 region = Rect2(32, 104, 8, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g1lo4"]
@@ -98,4 +100,3 @@ shape = SubResource("RectangleShape2D_sciwa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(40, -16)
-zoom = Vector2(9, 9)
