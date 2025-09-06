@@ -20,10 +20,12 @@ global="*res://scripts/global.gd"
 
 [display]
 
-window/size/viewport_width=480
-window/size/viewport_height=260
+window/size/resizable=false
 window/stretch/mode="viewport"
-window/stretch/aspect="expand"
+
+[global_group]
+
+Player=""
 
 [input]
 
