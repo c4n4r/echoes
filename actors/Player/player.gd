@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 const SPEED = 100.0 * 60.0
 const JUMP_VELOCITY = -325.0 * 60.0
-const MAX_FOCUS_RADIUS = 400.0
-const FOCUS_GROWTH_RATE = 200.0
+const MAX_FOCUS_RADIUS = 500.0
+const FOCUS_GROWTH_RATE = 120.0
 
 @onready var animated_sprite: AnimatedSprite2D = $Anims
 @onready var player_camera: Camera2D = $Camera2D
@@ -11,6 +11,7 @@ const FOCUS_GROWTH_RATE = 200.0
 @onready var echo_spot: Node2D = $EchoSpot
 @onready var echo_cooldown_timer: Timer = $EchoCooldown
 @export var is_echo_activated := false
+@onready var audio_player: AudioStreamPlayer2D = $FocusAudio
 
 
 signal on_focus_start
@@ -84,6 +85,7 @@ func handle_focus(delta: float) -> void:
 			stop_focus()
 
 func start_focus() -> void:
+	audio_player.play()
 	if not can_focus:
 		return
 	on_focus_start.emit()
@@ -103,15 +105,16 @@ func start_focus() -> void:
 	focus_radius = FOCUS_GROWTH_RATE * get_physics_process_delta_time()
 
 func stop_focus() -> void:
+	audio_player.stop()
 	can_focus = false
 	is_focusing = false
 	echo_cooldown_timer.wait_time = focus_radius / (FOCUS_GROWTH_RATE)
 	echo_cooldown_timer.start()
 	is_echo_activated = false
 	if echo_instance:
-		# Shrink echo at FOCUS_GROWTH_RATE / 2
 		var shrink_time = (focus_radius) / (FOCUS_GROWTH_RATE * 6)
 		echo_instance.make_radius_grow(focus_radius, 0.0, shrink_time)
+		audio_player.stop()
 	on_focus_stop.emit()
 
 

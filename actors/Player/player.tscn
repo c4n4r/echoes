@@ -1,7 +1,8 @@
-[gd_scene load_steps=45 format=3 uid="uid://tmqk4k3q1usc"]
+[gd_scene load_steps=46 format=3 uid="uid://tmqk4k3q1usc"]
 
 [ext_resource type="Script" uid="uid://cp1jonif0fst8" path="res://actors/Player/player.gd" id="1_ixlqj"]
 [ext_resource type="Texture2D" uid="uid://ci6hvrnhpp4pc" path="res://assets/Jump/Jump_0001.png" id="2_bflq2"]
+[ext_resource type="AudioStream" uid="uid://chi4d6s54ocw8" path="res://assets/FX/focus.mp3" id="2_ue7d7"]
 [ext_resource type="Script" uid="uid://cnwp3ctmrhvgy" path="res://actors/camera/camera.gd" id="2_vlvg8"]
 [ext_resource type="Texture2D" uid="uid://bjc2t5ui5mpwf" path="res://assets/Jump/Jump_0002.png" id="3_vlvg8"]
 [ext_resource type="Texture2D" uid="uid://dky83gvkv40gm" path="res://assets/Jump/Jump_0003.png" id="4_ue7d7"]
@@ -233,6 +234,9 @@ size = Vector2(12, 60)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_ixlqj")
+
+[node name="FocusAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_ue7d7")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(160, -80)
