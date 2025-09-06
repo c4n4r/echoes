@@ -18,5 +18,5 @@ func _process(delta: float) -> void:
 
 func update_mask() -> void:
 	if player_camera:
-		size = player_camera.get_viewport_rect().size
+		size = get_viewport().size
 		position = player_camera.global_position - size / 2

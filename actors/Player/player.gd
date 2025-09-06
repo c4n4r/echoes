@@ -85,7 +85,6 @@ func handle_focus(delta: float) -> void:
 			stop_focus()
 
 func start_focus() -> void:
-	audio_player.play()
 	if not can_focus:
 		return
 	on_focus_start.emit()
@@ -103,6 +102,7 @@ func start_focus() -> void:
 	# commence à grandir
 	echo_instance.make_radius_grow(0.0, FOCUS_GROWTH_RATE * get_physics_process_delta_time(), get_physics_process_delta_time())
 	focus_radius = FOCUS_GROWTH_RATE * get_physics_process_delta_time()
+	audio_player.play()
 
 func stop_focus() -> void:
 	audio_player.stop()

@@ -14,7 +14,7 @@ uniform float noise_scale = 0.5;       // Échelle du bruit (influence sur la di
 uniform vec4 front_color : source_color; // Couleur du front (souvent blanc ou noir)
 
 uniform sampler2D SCREEN_TEXTURE: hint_screen_texture, filter_linear_mipmap;
-uniform bool active = false; // Active le shader uniquement si true
+uniform bool active = true; // Active le shader uniquement si true
 
 
 // Circle reveal
@@ -86,7 +86,7 @@ void fragment() {
         COLOR.a *= alpha; // Appliquer la transparence avec l'alpha
     } else {
         COLOR = front_color;
-        COLOR.a = 1.0; // Plein front color partout si non actif
+        COLOR.a = 0.0; // Complètement transparent si non actif
     }
 }
 
