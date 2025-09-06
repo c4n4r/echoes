@@ -61,7 +61,13 @@ func update_animation() -> void:
 		if direction:
 			animated_sprite.play("Run")
 		else:
-			animated_sprite.play("Idle")
+			if (is_focusing):
+				animated_sprite.play("Focus")
+				if (animated_sprite.animation_finished):
+					animated_sprite.play("FocusStill")
+			else:
+				animated_sprite.play("Idle")
+
 
 func handle_focus(delta: float) -> void:
 	if Input.is_action_pressed("Focus"):
