@@ -26,6 +26,7 @@ func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	handle_jump(delta)
 	handle_movement(delta)
+	handle_focus(delta)
 	move_and_slide()
 	update_animation()
 
