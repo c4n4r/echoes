@@ -35,8 +35,8 @@ func _process(_delta):
 
 func _make_echo_roam(_delta: float) -> void:
 	# make the echo slowly roam around the actor
-	var roam_radius = reveal_radius * 0.1
-	var roam_speed = 0.5 # slower speed for gentle roaming
+	var roam_radius = reveal_radius * 0.2
+	var roam_speed = 0.7
 	self._roam_time += _delta
 	var offset = Vector2(
 		roam_radius * sin(self._roam_time * roam_speed),

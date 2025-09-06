@@ -230,7 +230,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8fshm"]
-size = Vector2(12, 60)
+size = Vector2(9, 59)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_ixlqj")
@@ -244,10 +244,13 @@ script = ExtResource("2_vlvg8")
 
 [node name="Anims" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_au0nh")
-animation = &"Falling"
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 0)
 shape = SubResource("RectangleShape2D_8fshm")
+
+[node name="Node2D" type="Node2D" parent="CollisionShape2D"]
 
 [node name="EchoSpot" type="Node2D" parent="."]
 position = Vector2(0, -24)

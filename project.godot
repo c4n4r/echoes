@@ -14,6 +14,10 @@ config/name="echoes"
 run/main_scene="uid://dsbshct8ds45p"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
+[autoload]
+
+global="*res://scripts/global.gd"
+
 [display]
 
 window/size/viewport_width=480

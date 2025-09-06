@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dui2hp0rprcnn"]
+
+[ext_resource type="Script" uid="uid://b7o8h873mvbdm" path="res://actors/death_trigger/death_trigger.gd" id="1_1o3sb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v8xqy"]
+
+[node name="DeathTrigger" type="Area2D"]
+script = ExtResource("1_1o3sb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_v8xqy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
