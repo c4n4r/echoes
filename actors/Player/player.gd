@@ -47,7 +47,7 @@ func handle_jump(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY * delta
 
 func handle_movement(delta: float) -> void:
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis("left", "right")
 	if direction:
 		velocity.x = direction * SPEED * delta
 		animated_sprite.flip_h = direction < 0
@@ -61,7 +61,7 @@ func update_animation() -> void:
 		else:
 			animated_sprite.play("Falling")
 	else:
-		var direction := Input.get_axis("ui_left", "ui_right")
+		var direction := Input.get_axis("left", "right")
 		if direction:
 			animated_sprite.play("Run")
 		else:

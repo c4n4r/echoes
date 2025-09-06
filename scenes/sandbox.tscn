@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=4 uid="uid://dsbshct8ds45p"]
+[gd_scene load_steps=8 format=4 uid="uid://dsbshct8ds45p"]
 
+[ext_resource type="Script" uid="uid://c3ru0jj7j5t4" path="res://scenes/sandbox.gd" id="1_a8pr3"]
 [ext_resource type="TileSet" uid="uid://parpn03smti7" path="res://assets/new_tile_set.tres" id="2_a8pr3"]
 [ext_resource type="Shader" uid="uid://dupk06878wxfb" path="res://shaders/front_mask_shader.gdshader" id="2_rgld7"]
 [ext_resource type="Script" uid="uid://7ww6n045jnm2" path="res://scripts/front_mask.gd" id="3_j6lu3"]
 [ext_resource type="PackedScene" uid="uid://tmqk4k3q1usc" path="res://actors/Player/Player.tscn" id="6_16ffl"]
+[ext_resource type="AudioStream" uid="uid://dvvxsyrpovh4l" path="res://assets/Musics/ambient_1.mp3" id="6_17a3a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j6lu3"]
 shader = ExtResource("2_rgld7")
@@ -19,6 +21,7 @@ shader_parameter/front_color = Color(1, 1, 1, 1)
 shader_parameter/active = false
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_a8pr3")
 
 [node name="Past" type="Node2D" parent="."]
 
@@ -42,3 +45,7 @@ tile_map_data = PackedByteArray("AAD8/wYAAAAFAAAAAAD8/wcAAAAFAAAAAAD8/wgAAAAFAAA
 tile_set = ExtResource("2_a8pr3")
 
 [node name="Player" parent="Present" instance=ExtResource("6_16ffl")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_17a3a")
+volume_db = -5.0
