@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var front_mask := $FrontMask
-@export var reveal_radius: float = 200.0
+@export var reveal_radius: float = 10.0
 var shader_material: ShaderMaterial
 
 func _ready():
@@ -10,10 +10,9 @@ func _ready():
 func _process(_delta):
 	var mouse_pos = get_viewport().get_mouse_position()
 	if Input.is_action_pressed("switch"):
-		print("Switching shape")
 		shader_material.set_shader_parameter("shape_type", 1) # rectangle
 	else:
-		shader_material.set_shader_parameter("shape_type", 2) # circle
+		shader_material.set_shader_parameter("shape_type", 0) # circle
 
 	shader_material.set_shader_parameter("mouse_pos", mouse_pos)
 	shader_material.set_shader_parameter("radius", reveal_radius)
