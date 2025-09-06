@@ -13,23 +13,18 @@ const FOCUS_GROWTH_RATE = 120.0
 @export var is_echo_activated := false
 @onready var audio_player: AudioStreamPlayer2D = $FocusAudio
 
-
 signal on_focus_start
 signal on_focus_stop
 
 
 var is_focusing := false
 var focus_radius := 0.0
+var echo_radius := 15.0
 var echo_instance: Echo = null
 var can_focus: bool = true
 
 func _ready() -> void:
-	echo_instance = Echo.new(
-		front_mask,
-		echo_spot,
-		25.0
-	)
-	add_child(echo_instance)
+	pass
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -73,7 +68,6 @@ func handle_focus(delta: float) -> void:
 		if not is_focusing:
 			start_focus()
 		else:
-			# grandir l'echo tant que le focus est maintenu et pas au max
 			if focus_radius < MAX_FOCUS_RADIUS:
 				var new_radius = min(focus_radius + FOCUS_GROWTH_RATE * delta, MAX_FOCUS_RADIUS)
 				echo_instance.make_radius_grow(focus_radius, new_radius, delta)
@@ -85,21 +79,12 @@ func handle_focus(delta: float) -> void:
 			stop_focus()
 
 func start_focus() -> void:
-	if not can_focus:
+	if not can_focus or not echo_instance:
 		return
 	on_focus_start.emit()
-
 	is_focusing = true
 	is_echo_activated = true
 	focus_radius = 0.0
-	
-	echo_instance = Echo.new(
-		front_mask,
-		echo_spot,
-		15.0
-	)
-	add_child(echo_instance)
-	# commence à grandir
 	echo_instance.make_radius_grow(0.0, FOCUS_GROWTH_RATE * get_physics_process_delta_time(), get_physics_process_delta_time())
 	focus_radius = FOCUS_GROWTH_RATE * get_physics_process_delta_time()
 	audio_player.play()
@@ -113,7 +98,7 @@ func stop_focus() -> void:
 	is_echo_activated = false
 	if echo_instance:
 		var shrink_time = (focus_radius) / (FOCUS_GROWTH_RATE * 6)
-		echo_instance.make_radius_grow(focus_radius, 0.0, shrink_time)
+		echo_instance.make_radius_grow(focus_radius, echo_radius, shrink_time)
 		audio_player.stop()
 	on_focus_stop.emit()
 

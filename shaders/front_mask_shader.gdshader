@@ -89,7 +89,3 @@ void fragment() {
         COLOR.a = 0.0; // Complètement transparent si non actif
     }
 }
-
-
-
-
