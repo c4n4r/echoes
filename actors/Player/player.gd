@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 const SPEED = 100.0 * 60.0
 const JUMP_VELOCITY = -325.0 * 60.0
-const MAX_FOCUS_RADIUS = 400.0
-const FOCUS_GROWTH_RATE = 200.0
+const MAX_FOCUS_RADIUS = 500.0
+const FOCUS_GROWTH_RATE = 120.0
 
 @onready var animated_sprite: AnimatedSprite2D = $Anims
 @onready var player_camera: Camera2D = $Camera2D
@@ -11,7 +11,7 @@ const FOCUS_GROWTH_RATE = 200.0
 @onready var echo_spot: Node2D = $EchoSpot
 @onready var echo_cooldown_timer: Timer = $EchoCooldown
 @export var is_echo_activated := false
-
+@onready var audio_player: AudioStreamPlayer2D = $FocusAudio
 
 signal on_focus_start
 signal on_focus_stop
@@ -19,16 +19,12 @@ signal on_focus_stop
 
 var is_focusing := false
 var focus_radius := 0.0
+var echo_radius := 15.0
 var echo_instance: Echo = null
 var can_focus: bool = true
 
 func _ready() -> void:
-	echo_instance = Echo.new(
-		front_mask,
-		echo_spot,
-		25.0
-	)
-	add_child(echo_instance)
+	pass
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -47,7 +43,7 @@ func handle_jump(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY * delta
 
 func handle_movement(delta: float) -> void:
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis("left", "right")
 	if direction:
 		velocity.x = direction * SPEED * delta
 		animated_sprite.flip_h = direction < 0
@@ -61,7 +57,7 @@ func update_animation() -> void:
 		else:
 			animated_sprite.play("Falling")
 	else:
-		var direction := Input.get_axis("ui_left", "ui_right")
+		var direction := Input.get_axis("left", "right")
 		if direction:
 			animated_sprite.play("Run")
 		else:
@@ -72,7 +68,6 @@ func handle_focus(delta: float) -> void:
 		if not is_focusing:
 			start_focus()
 		else:
-			# grandir l'echo tant que le focus est maintenu et pas au max
 			if focus_radius < MAX_FOCUS_RADIUS:
 				var new_radius = min(focus_radius + FOCUS_GROWTH_RATE * delta, MAX_FOCUS_RADIUS)
 				echo_instance.make_radius_grow(focus_radius, new_radius, delta)
@@ -84,34 +79,27 @@ func handle_focus(delta: float) -> void:
 			stop_focus()
 
 func start_focus() -> void:
-	if not can_focus:
+	if not can_focus or not echo_instance:
 		return
 	on_focus_start.emit()
-
 	is_focusing = true
 	is_echo_activated = true
 	focus_radius = 0.0
-	
-	echo_instance = Echo.new(
-		front_mask,
-		echo_spot,
-		15.0
-	)
-	add_child(echo_instance)
-	# commence à grandir
 	echo_instance.make_radius_grow(0.0, FOCUS_GROWTH_RATE * get_physics_process_delta_time(), get_physics_process_delta_time())
 	focus_radius = FOCUS_GROWTH_RATE * get_physics_process_delta_time()
+	audio_player.play()
 
 func stop_focus() -> void:
+	audio_player.stop()
 	can_focus = false
 	is_focusing = false
 	echo_cooldown_timer.wait_time = focus_radius / (FOCUS_GROWTH_RATE)
 	echo_cooldown_timer.start()
 	is_echo_activated = false
 	if echo_instance:
-		# Shrink echo at FOCUS_GROWTH_RATE / 2
 		var shrink_time = (focus_radius) / (FOCUS_GROWTH_RATE * 6)
-		echo_instance.make_radius_grow(focus_radius, 0.0, shrink_time)
+		echo_instance.make_radius_grow(focus_radius, echo_radius, shrink_time)
+		audio_player.stop()
 	on_focus_stop.emit()
 
 

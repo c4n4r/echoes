@@ -7,15 +7,16 @@ extends Node2D
 @export var _roam_time: float = 0.0
 
 var shader_material: ShaderMaterial
-
+var target: Node2D = null
 func _init(
 	mask: ColorRect,
 	node: Node2D,
-	radius: float = 15.0
+	radius: float
 ) -> void:
-	self.front_mask = mask
-	self.actor = node
-	self.reveal_radius = radius
+	print(radius)
+	front_mask = mask
+	actor = node
+	reveal_radius = radius
 
 
 func _ready():
@@ -29,14 +30,31 @@ func _ready():
 
 func _process(_delta):
 	if shader_material:
-		_make_echo_roam(_delta)
+		if (not target):
+			_make_echo_roam(_delta)
+		else:
+			if node_has_echo_slot(target):
+				shader_material.set_shader_parameter("mouse_pos",
+				target.get_node("EchoSpot").global_position)
+				actor = target
+				actor.echo_instance = self
+			else:
+				shader_material.set_shader_parameter("mouse_pos",
+				target.get_node("EchoSpot").global_position)
+				actor = target
+				actor.echo_instance = self
+				reveal_radius = actor.echo_radius
+			clear_target()
 		shader_material.set_shader_parameter("radius", reveal_radius)
 
 
+func node_has_echo_slot(node: Node) -> bool:
+	print("Checking for echo slot in node: ", node.get_children().has("EchoSpot"))
+	return node.get_children().has("EchoSpot")
+
 func _make_echo_roam(_delta: float) -> void:
-	# make the echo slowly roam around the actor
-	var roam_radius = reveal_radius * 0.1
-	var roam_speed = 0.5 # slower speed for gentle roaming
+	var roam_radius = reveal_radius * 0.2
+	var roam_speed = 0.7
 	self._roam_time += _delta
 	var offset = Vector2(
 		roam_radius * sin(self._roam_time * roam_speed),
@@ -66,3 +84,9 @@ func make_radius_evolve(target_radius: float, duration: float) -> void:
 		time_passed += get_process_delta_time()
 		await get_tree().process_frame
 	reveal_radius = target_radius
+
+func set_target(node: Node2D) -> void:
+	target = node
+
+func clear_target() -> void:
+	target = null
