@@ -3,13 +3,26 @@ extends Node2D
 
 @export var front_mask: ColorRect
 @export var actor: Node2D
-@export var reveal_radius: float = 50.0
+@export var reveal_radius: float = 15.0
 
 var shader_material: ShaderMaterial
+
+func _init(
+	mask: ColorRect,
+	node: Node2D,
+	radius: float = 15.0
+) -> void:
+	self.front_mask = mask
+	self.actor = node
+	self.reveal_radius = radius
+
 
 func _ready():
 	if front_mask:
 		shader_material = front_mask.material as ShaderMaterial
+		if shader_material:
+			shader_material.set_shader_parameter("radius", reveal_radius)
+			shader_material.set_shader_parameter("active", true)
 
 func _process(_delta):
 	if shader_material:

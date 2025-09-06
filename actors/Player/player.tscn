@@ -241,5 +241,4 @@ sprite_frames = SubResource("SpriteFrames_au0nh")
 animation = &"Falling"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-6, -2)
 shape = SubResource("RectangleShape2D_8fshm")

@@ -6,6 +6,7 @@ const MAX_FOCUS_RADIUS = 400.0
 const FOCUS_GROWTH_RATE = 200.0
 
 @onready var animated_sprite: AnimatedSprite2D = $Anims
+@onready var player_camera: Camera2D = $Camera2D
 @onready var front_mask: ColorRect = get_tree().current_scene.get_node("FrontMask")
 @export var is_echo_activated := false
 
@@ -14,17 +15,17 @@ var focus_radius := 0.0
 var echo_instance: Echo = null
 
 func _ready() -> void:
-	echo_instance = Echo.new()
-	echo_instance.front_mask = front_mask
-	echo_instance.actor = self
-	echo_instance.reveal_radius = 15.0
+	echo_instance = Echo.new(
+		front_mask,
+		self,
+		25.0
+	)
 	add_child(echo_instance)
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	handle_jump(delta)
 	handle_movement(delta)
-	handle_focus(delta)
 	move_and_slide()
 	update_animation()
 
@@ -78,9 +79,11 @@ func start_focus() -> void:
 	is_echo_activated = true
 	focus_radius = 0.0
 	
-	echo_instance = Echo.new()
-	echo_instance.front_mask = front_mask
-	echo_instance.actor = self
+	echo_instance = Echo.new(
+		front_mask,
+		self,
+		15.0
+	)
 	add_child(echo_instance)
 	# commence à grandir
 	echo_instance.make_radius_grow(0.0, FOCUS_GROWTH_RATE * get_physics_process_delta_time(), get_physics_process_delta_time())

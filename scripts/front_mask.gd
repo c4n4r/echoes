@@ -1,16 +1,22 @@
 extends ColorRect
 
 var player: CharacterBody2D
-var player_camera: Camera2D = null
-# Called when the node enters the scene tree for the first time.
+var player_camera: Camera2D
+
 func _ready() -> void:
 	player = get_tree().current_scene.get_node("Present/Player") as CharacterBody2D
 	player_camera = player.get_node("Camera2D") as Camera2D
-	size = player_camera.get_viewport_rect().size
-	position = player_camera.get_global_position() - size / 2
+	update_mask()
+	# Connect to camera's position changed signal if available
+	if player_camera.has_signal("position_changed"):
+		player_camera.connect("position_changed", Callable(self, "update_mask"))
+	# Connect to viewport resize if needed
+	get_viewport().connect("size_changed", Callable(self, "update_mask"))
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	update_mask()
+
+func update_mask() -> void:
 	if player_camera:
 		size = player_camera.get_viewport_rect().size
-		position = player_camera.get_global_position() - size / 2
+		position = player_camera.global_position - size / 2
