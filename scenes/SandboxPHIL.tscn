@@ -24,6 +24,7 @@ texture = ExtResource("2_pfvp1")
 20:0/0 = 0
 24:0/0 = 0
 8:0/0 = 0
+8:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:2/0 = 0
 9:5/0 = 0
 10:5/0 = 0
@@ -44,12 +45,19 @@ texture = ExtResource("2_pfvp1")
 10:6/0 = 0
 9:6/0 = 0
 4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:1/0 = 0
+9:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 10:0/0 = 0
+10:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:1/0 = 0
 2:1/0 = 0
 2:0/0 = 0
@@ -67,6 +75,7 @@ texture = ExtResource("2_pfvp1")
 4:2/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_xfxvp"]
+physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_qp2ro")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xfxvp"]
@@ -171,7 +180,7 @@ texture = ExtResource("5_2na8e")
 [node name="Past" type="Node2D" parent="."]
 
 [node name="LayerPassé" type="TileMapLayer" parent="Past"]
-tile_map_data = PackedByteArray("AAAsAP7/AAAFAAAAAAAtAP7/AAAFAAAAAAAuAP7/AAAFAAAAAAAzAPr/AAAFAAAAAAA0APr/AAAFAAAAAAA=")
+tile_map_data = PackedByteArray("AAAsAP7/AAAFAAAAAAAtAP7/AAAFAAAAAAAuAP7/AAAFAAAAAAA=")
 tile_set = SubResource("TileSet_xfxvp")
 
 [node name="Platform" parent="Past" instance=ExtResource("7_3nxbv")]
@@ -183,6 +192,11 @@ to = Vector2(480, 8)
 position = Vector2(600, -328)
 from = Vector2(600, -136)
 to = Vector2(600, -328)
+
+[node name="Platform3" parent="Past" instance=ExtResource("8_wdtvs")]
+position = Vector2(832, -120)
+from = Vector2(832, -56)
+to = Vector2(832, 120)
 
 [node name="FrontMask" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_xfxvp")
@@ -201,14 +215,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Present" type="Node2D" parent="."]
 
 [node name="LayerPrésent" type="TileMapLayer" parent="Present"]
-tile_map_data = PackedByteArray("AAAAAAcAAAAFAAAAAAABAAcAAAAFAAAAAAACAAcAAAAFAAAAAAADAAcAAAAFAAAAAAAEAAcAAAAFAAAAAAAFAAcAAAAFAAAAAAAGAAcAAAAFAAAAAAAHAAcAAAAFAAAAAAAIAAcAAAAFAAAAAAAJAAcAAAAFAAAAAAAKAAcAAAAFAAAAAAALAAcAAAAFAAAAAAAMAAcAAAAFAAAAAAD//wcAAAAFAAAAAAD+/wcAAAAFAAAAAAD9/wcAAAAFAAAAAAD8/wcAAAAFAAAAAAD7/wcAAAAFAAAAAAAgAAAAAAAFAAAAAAAhAAAAAAAFAAAAAAAiAAAAAAAFAAAAAAAjAAAAAAAFAAAAAAAmAP//AAAFAAAAAAAnAP//AAAFAAAAAAAoAP//AAAFAAAAAAApAP//AAAFAAAAAAAxAPz/AAAFAAAAAAAyAPz/AAAFAAAAAAAyAPj/AAAFAAAAAAAxAPj/AAAFAAAAAAAiANj/AAAFAAAAAAAhANj/AAAFAAAAAAAgANj/AAAFAAAAAAAfANj/AAAFAAAAAAAeANj/AAAFAAAAAAAdANj/AAAFAAAAAAAcANj/AAAFAAAAAAAbANj/AAAFAAAAAAAaANj/AAAFAAAAAAAZANj/AAAFAAAAAAAYANj/AAAFAAAAAAAZANn/AAAFAAAAAAAaANn/AAAFAAAAAAAbANn/AAAFAAAAAAAcANn/AAAFAAAAAAAdANn/AAAFAAAAAAAeANn/AAAFAAAAAAAfANn/AAAFAAAAAAAgANn/AAAFAAAAAAAhANn/AAAFAAAAAAAgANr/AAAFAAAAAAAfANr/AAAFAAAAAAAeANr/AAAFAAAAAAAdANr/AAAFAAAAAAAcANr/AAAFAAAAAAAbANr/AAAFAAAAAAAaANr/AAAFAAAAAAAfANf/AAADAAAAAAAgANf/AAABAAAAAAAhANf/AAACAAAAAAAiANf/AAADAAAAAAAcANf/AAACAAAAAAAdANf/AAADAAAAAAAeANf/AAACAAAAAAAaANf/AAACAAAAAAAbANf/AAADAAAAAAAYANf/AAAAAAAAAAAZANf/AAABAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAcAAAAFAAAAAAABAAcAAAAFAAAAAAACAAcAAAAFAAAAAAADAAcAAAAFAAAAAAAEAAcAAAAFAAAAAAAFAAcAAAAFAAAAAAAGAAcAAAAFAAAAAAAHAAcAAAAFAAAAAAAIAAcAAAAFAAAAAAAJAAcAAAAFAAAAAAAKAAcAAAAFAAAAAAALAAcAAAAFAAAAAAAMAAcAAAAFAAAAAAD//wcAAAAFAAAAAAD+/wcAAAAFAAAAAAD9/wcAAAAFAAAAAAD8/wcAAAAFAAAAAAD7/wcAAAAFAAAAAAAgAAAAAAAFAAAAAAAhAAAAAAAFAAAAAAAiAAAAAAAFAAAAAAAjAAAAAAAFAAAAAAAmAP//AAAFAAAAAAAnAP//AAAFAAAAAAAoAP//AAAFAAAAAAApAP//AAAFAAAAAAAyAPj/AAAFAAAAAAAxAPj/AAAFAAAAAAAiANj/AAAFAAAAAAAhANj/AAAFAAAAAAAgANj/AAAFAAAAAAAfANj/AAAFAAAAAAAeANj/AAAFAAAAAAAdANj/AAAFAAAAAAAcANj/AAAFAAAAAAAbANj/AAAFAAAAAAAaANj/AAAFAAAAAAAZANj/AAAFAAAAAAAYANj/AAAFAAAAAAAZANn/AAAFAAAAAAAaANn/AAAFAAAAAAAbANn/AAAFAAAAAAAcANn/AAAFAAAAAAAdANn/AAAFAAAAAAAeANn/AAAFAAAAAAAfANn/AAAFAAAAAAAgANn/AAAFAAAAAAAhANn/AAAFAAAAAAAgANr/AAAFAAAAAAAfANr/AAAFAAAAAAAeANr/AAAFAAAAAAAdANr/AAAFAAAAAAAcANr/AAAFAAAAAAAbANr/AAAFAAAAAAAaANr/AAAFAAAAAAAfANf/AAADAAAAAAAgANf/AAABAAAAAAAhANf/AAACAAAAAAAiANf/AAADAAAAAAAcANf/AAACAAAAAAAdANf/AAADAAAAAAAeANf/AAACAAAAAAAaANf/AAACAAAAAAAbANf/AAADAAAAAAAYANf/AAAAAAAAAAAZANf/AAABAAAAAAA=")
 tile_set = SubResource("TileSet_3nxbv")
 
 [node name="Player" parent="Present" instance=ExtResource("4_qp2ro")]
-
-[node name="DeathTrigger" parent="Present/Player" instance=ExtResource("11_s240m")]
-position = Vector2(624, 296)
-scale = Vector2(26372, -2.50052)
 
 [node name="Platform" parent="Present" instance=ExtResource("7_3nxbv")]
 position = Vector2(416, 120)
@@ -224,3 +234,7 @@ to = Vector2(384, -120)
 position = Vector2(576, -632)
 from = Vector2(576, -328)
 to = Vector2(576, -632)
+
+[node name="DeathTrigger" parent="." instance=ExtResource("11_s240m")]
+position = Vector2(488, 272)
+scale = Vector2(107.36, 1)

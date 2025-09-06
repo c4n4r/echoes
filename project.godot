@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="echoes"
-run/main_scene="uid://h0p2e330oalr"
+run/main_scene="uid://tmqk4k3q1usc"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
 [autoload]
