@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnium35p8a3ee"]
+
+[ext_resource type="Script" uid="uid://dkbwa363mby3s" path="res://actors/platform/platform.gd" id="1_8smxi"]
+[ext_resource type="Texture2D" uid="uid://c6fmsvfi76uw2" path="res://assets/Tiles/TilesV2.png" id="2_3kaqh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i8y5h"]
+size = Vector2(64, 16)
+
+[node name="Platform" type="StaticBody2D"]
+script = ExtResource("1_8smxi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-8, 0)
+texture = ExtResource("2_3kaqh")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(8, 0)
+texture = ExtResource("2_3kaqh")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(24, 0)
+texture = ExtResource("2_3kaqh")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+position = Vector2(-24, 0)
+texture = ExtResource("2_3kaqh")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_i8y5h")
