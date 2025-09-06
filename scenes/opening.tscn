@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://h0p2e330oalr"]
+[gd_scene load_steps=11 format=4 uid="uid://h0p2e330oalr"]
 
 [ext_resource type="Shader" uid="uid://dupk06878wxfb" path="res://shaders/front_mask_shader.gdshader" id="1_fvetl"]
 [ext_resource type="Script" uid="uid://s2j48too864y" path="res://scenes/opening.gd" id="1_uod42"]
@@ -7,6 +7,7 @@
 [ext_resource type="TileSet" uid="uid://parpn03smti7" path="res://assets/new_tile_set.tres" id="4_v10qa"]
 [ext_resource type="Script" uid="uid://diisoi3lyf5s" path="res://actors/monolith/monolith.gd" id="5_jo2c7"]
 [ext_resource type="Texture2D" uid="uid://5ywlndhk7vrq" path="res://assets/echoes.png" id="6_drfco"]
+[ext_resource type="AudioStream" uid="uid://caamwob6et432" path="res://assets/Musics/opening.mp3" id="8_sc7q2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sc7q2"]
 shader = ExtResource("1_fvetl")
@@ -33,7 +34,7 @@ tile_map_data = PackedByteArray("AAAOAAgAAAAFAAAAAAAPAAgAAAAFAAAAAAAQAAgAAAAFAAA
 tile_set = ExtResource("4_v10qa")
 
 [node name="Echoes" type="Sprite2D" parent="Past"]
-position = Vector2(384, 40)
+position = Vector2(364, -16)
 scale = Vector2(0.463, 0.5)
 texture = ExtResource("6_drfco")
 
@@ -50,7 +51,7 @@ tile_map_data = PackedByteArray("AAAAAAgAAAAFAAAAAAAAAAkAAAAFAAAAAAAAAAoAAAAFAAA
 tile_set = ExtResource("4_v10qa")
 
 [node name="Echo" type="Node2D" parent="Present"]
-position = Vector2(356, 24)
+position = Vector2(364, -16)
 script = ExtResource("5_jo2c7")
 echo_radius = 165.0
 echo_roam_speed = 1.0
@@ -65,5 +66,10 @@ scale = Vector2(1, 6.96)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevel"]
 shape = SubResource("RectangleShape2D_1kag7")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_sc7q2")
+volume_db = -3.0
+autoplay = true
 
 [connection signal="body_entered" from="NextLevel" to="." method="_on_next_level_body_entered"]
